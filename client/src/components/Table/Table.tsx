@@ -4,6 +4,7 @@ import { IUser } from "../Users/Users";
 
 interface Props {
   users: Array<IUser>;
+  deleteUser: Function;
 }
 
 function Table(props: Props) {
@@ -26,7 +27,11 @@ function Table(props: Props) {
             </td>
             <td>{user.email}</td>
             <td>
-              <button className="btn btn-default">
+              <button
+                //the add of arrow func so the function won't start before clicking
+                onClick={() => props.deleteUser(user._id)}
+                className="btn btn-default"
+              >
                 <i className="bi-trash3"></i>
               </button>
             </td>
