@@ -8,7 +8,7 @@ export interface IUser {
   fullName: string;
   email: string;
   status: StatusType;
-  id?: string;
+  _id?: string;
 }
 
 interface UsersProps {}
@@ -20,7 +20,7 @@ class Users extends React.Component<UsersProps, UsersState> {
     return (
       <div className="bg-dark bg-opacity-10 border px-2">
         <Header></Header>
-        <Table></Table>
+        <Table users={[]}></Table>
       </div>
     );
   }
