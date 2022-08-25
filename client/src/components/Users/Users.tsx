@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../Header/Header";
+import Message from "../Message/Message";
 import Table from "../Table/Table";
 
 export type StatusType = "active" | "expired" | "banned";
@@ -13,6 +14,7 @@ export interface IUser {
 
 interface UsersState {
   users: Array<IUser>;
+  addSuccess: Boolean;
 }
 
 class Users extends React.Component<{}, UsersState> {
@@ -21,6 +23,7 @@ class Users extends React.Component<{}, UsersState> {
 
     this.state = {
       users: [],
+      addSuccess: false,
     };
   }
 
@@ -46,7 +49,14 @@ class Users extends React.Component<{}, UsersState> {
       .then((json) => {
         this.setState(() => ({
           users: [...this.state.users, json],
+          addSuccess: true,
         }));
+
+        setTimeout(() => {
+          this.setState(() => ({
+            addSuccess: false,
+          }));
+        }, 2000);
       });
   };
 
@@ -72,10 +82,13 @@ class Users extends React.Component<{}, UsersState> {
       <div className="bg-dark bg-opacity-10 border px-2">
         <Header addUser={this.addUser} />
         {this.state.users.length === 0 && (
-          <div className="alert alert-warning" role="alert">
-            No users to display.
-          </div>
+          <Message type="warning" children="No users to display." />
         )}
+
+        {this.state.addSuccess && (
+          <Message type="info" children="New user added." />
+        )}
+
         <Table users={this.state.users} deleteUser={this.deleteUser} />
       </div>
     );

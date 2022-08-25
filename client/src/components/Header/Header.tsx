@@ -35,6 +35,11 @@ class Header extends React.Component<HeaderProps, HeaderState> {
       email: this.state.email,
       status: "active",
     });
+
+    this.setState(() => ({
+      fullName: "",
+      email: "",
+    }));
   };
 
   render() {
