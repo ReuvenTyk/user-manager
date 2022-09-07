@@ -7,7 +7,7 @@ interface HeaderProps {
   addUser: Function;
 }
 
-interface HeaderState {
+export interface HeaderState {
   fullName: string;
   email: string;
   status: string;
@@ -44,7 +44,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     this.props.addUser({
       fullName: this.state.fullName,
       email: this.state.email,
-      status: "active",
+      status: this.state.status,
     });
 
     this.setState(() => ({
@@ -82,10 +82,9 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             className="form-select mx-3"
             onChange={(e) => this.handleStatusSelect(e.target.value)}
           >
-            <option value="All">All</option>
-            <option value="Active">Active</option>
-            <option value="Expired">Expired</option>
-            <option value="Banned">Banned</option>
+            <option value="active">Active</option>
+            <option value="expired">Expired</option>
+            <option value="banned">Banned</option>
           </select>
 
           <button onClick={this.addUser} className="btn btn-info text-white">

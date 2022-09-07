@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Status from "../Status/Status";
 import { IUser } from "../Users/Users";
 
@@ -7,6 +8,8 @@ interface Props {
 }
 
 function Table(props: Props) {
+  const [status, setStatus] = useState("active");
+
   return (
     <table className="table table-hover">
       <thead>

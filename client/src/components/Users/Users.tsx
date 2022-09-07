@@ -70,7 +70,7 @@ class Users extends React.Component<{}, UsersState> {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ _id: id, fullName: fullName }),
+      body: JSON.stringify({ _id: id }),
     })
       .then((res) => res.json())
       .then((json) => {
