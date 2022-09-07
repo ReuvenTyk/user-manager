@@ -3,7 +3,8 @@ interface Props {
   type: "warning" | "info" | "danger" | "success";
   children?: React.ReactNode;
 }
-function Status(props: Props) {
+
+function Message(props: Props) {
   function getBadgeCss() {
     switch (props.type) {
       case "success":
@@ -18,11 +19,8 @@ function Status(props: Props) {
         return "alert-secondary";
     }
   }
-}
-
-function Message(props: Props) {
   return (
-    <div className="alert alert-warning" role="alert">
+    <div className={`alert ${getBadgeCss()}`} role="alert">
       {props.children}
     </div>
   );

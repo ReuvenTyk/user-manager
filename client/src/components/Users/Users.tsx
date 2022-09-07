@@ -15,6 +15,8 @@ export interface IUser {
 interface UsersState {
   users: Array<IUser>;
   addSuccess: Boolean;
+  deleteSuccess: Boolean;
+  userDel: string;
 }
 
 class Users extends React.Component<{}, UsersState> {
@@ -24,6 +26,8 @@ class Users extends React.Component<{}, UsersState> {
     this.state = {
       users: [],
       addSuccess: false,
+      deleteSuccess: false,
+      userDel: "",
     };
   }
 
@@ -60,20 +64,31 @@ class Users extends React.Component<{}, UsersState> {
       });
   };
 
-  deleteUser = (id: string) => {
+  deleteUser = (id: string, fullName: string) => {
     fetch("http://localhost:3000/users", {
       method: "delete",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ _id: id }),
+      body: JSON.stringify({ _id: id, fullName: fullName }),
     })
       .then((res) => res.json())
       .then((json) => {
-        const updated = this.state.users.filter((user) => user._id != json._id);
+        const updated = this.state.users.filter(
+          (user) => user._id !== json._id
+        );
+
         this.setState(() => ({
           users: updated,
+          deleteSuccess: true,
+          userDel: fullName,
         }));
+
+        setTimeout(() => {
+          this.setState(() => ({
+            deleteSuccess: false,
+          }));
+        }, 2000);
       });
   };
 
@@ -86,7 +101,19 @@ class Users extends React.Component<{}, UsersState> {
         )}
 
         {this.state.addSuccess && (
-          <Message type="info" children="New user added." />
+          <Message
+            type="success"
+            children={`New user: ${
+              this.state.users[this.state.users.length - 1].fullName
+            } has been added successfully.`}
+          />
+        )}
+
+        {this.state.deleteSuccess && (
+          <Message
+            type="danger"
+            children={`User: ${this.state.userDel} , has been deleted successfully.`}
+          />
         )}
 
         <Table users={this.state.users} deleteUser={this.deleteUser} />

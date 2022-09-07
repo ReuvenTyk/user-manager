@@ -1,4 +1,7 @@
 import React from "react";
+
+// export let statusSelected: any;
+
 interface HeaderProps {
   //getting the function from parent--> user.tsx
   addUser: Function;
@@ -7,6 +10,7 @@ interface HeaderProps {
 interface HeaderState {
   fullName: string;
   email: string;
+  status: string;
 }
 
 class Header extends React.Component<HeaderProps, HeaderState> {
@@ -16,6 +20,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     this.state = {
       fullName: "",
       email: "",
+      status: "active",
     };
   }
 
@@ -29,6 +34,12 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     });
   };
 
+  handleStatusSelect = (selected: string) => {
+    this.setState(() => ({
+      status: selected,
+    }));
+  };
+
   addUser = () => {
     this.props.addUser({
       fullName: this.state.fullName,
@@ -39,6 +50,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     this.setState(() => ({
       fullName: "",
       email: "",
+      status: "",
     }));
   };
 
@@ -64,6 +76,17 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             placeholder="Email"
             className="form-control mx-3"
           />
+
+          <select
+            id="status"
+            className="form-select mx-3"
+            onChange={(e) => this.handleStatusSelect(e.target.value)}
+          >
+            <option value="All">All</option>
+            <option value="Active">Active</option>
+            <option value="Expired">Expired</option>
+            <option value="Banned">Banned</option>
+          </select>
 
           <button onClick={this.addUser} className="btn btn-info text-white">
             Add

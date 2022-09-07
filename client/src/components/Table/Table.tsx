@@ -1,4 +1,3 @@
-import React from "react";
 import Status from "../Status/Status";
 import { IUser } from "../Users/Users";
 
@@ -29,7 +28,7 @@ function Table(props: Props) {
             <td>
               <button
                 //the add of arrow func so the function won't start before clicking
-                onClick={() => props.deleteUser(user._id)}
+                onClick={() => props.deleteUser(user._id, user.fullName)}
                 className="btn btn-default"
               >
                 <i className="bi-trash3"></i>
